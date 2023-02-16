@@ -15,12 +15,25 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework import routers
+from controller import views
 from django.views.generic import RedirectView
+
+router = routers.DefaultRouter()
+router.register(r'orders', views.OrderViewSet)
+router.register(r'clients', views.OrderViewSet)
+router.register(r'executors', views.OrderViewSet)
+router.register(r'rates', views.OrderViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('client/', include('client_bot.urls'), name='client'),
     path('executor/', include('executor_bot.urls'), name='executor'),
+
+    path('', include(router.urls)),
+    # TODO: removed after tests
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+
     path('', RedirectView.as_view(url='/admin/', permanent=True)),
 ]
 
