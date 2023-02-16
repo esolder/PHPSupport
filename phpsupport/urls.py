@@ -21,9 +21,9 @@ from django.views.generic import RedirectView
 
 router = routers.DefaultRouter()
 router.register(r'orders', views.OrderViewSet)
-router.register(r'clients', views.OrderViewSet)
-router.register(r'executors', views.OrderViewSet)
-router.register(r'rates', views.OrderViewSet)
+router.register(r'clients', views.ClientViewSet)
+router.register(r'executors', views.ExecutorViewSet)
+router.register(r'rates', views.RateViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

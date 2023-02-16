@@ -5,7 +5,7 @@ from django.utils import timezone
 
 class Client(models.Model):
     username = models.CharField('Уникальное имя пользователя telegram', max_length=32)
-    subscription_end = models.DateField()
+    subscription_end = models.DateField('Дата окончания подписки')
 
     def __str__(self):
         return self.username
