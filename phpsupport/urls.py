@@ -20,10 +20,10 @@ from controller import views
 from django.views.generic import RedirectView
 
 router = routers.DefaultRouter()
-router.register(r'orders', views.OrderViewSet)
-router.register(r'clients', views.ClientViewSet)
-router.register(r'executors', views.ExecutorViewSet)
-router.register(r'rates', views.RateViewSet)
+router.register(r'orders', views.OrderViewSet, basename='orders')
+router.register(r'clients', views.ClientViewSet, basename='clients')
+router.register(r'executors', views.ExecutorViewSet, basename='executors')
+router.register(r'rates', views.RateViewSet, basename='rates')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

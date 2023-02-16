@@ -4,28 +4,32 @@ from rest_framework import serializers
 class ClientSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Client
-        fields = ['username', 'subscription_end']
+        fields = ['id', 'username', 'subscription_end']
 
     
 class ExecutorSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Executor
-        fields = ['username',]
+        fields = ['id', 'username']
 
 
 class RateSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Rate
-        fields = ['rate', 'when_set']
+        fields = ['id', 'rate', 'when_set']
 
 
 class OrderSerializer(serializers.ModelSerializer):
-    client = ClientSerializer(read_only=True)
-    rate = serializers.DecimalField(source='rate.rate', max_digits=10, decimal_places=2)
-    executor = ExecutorSerializer(read_only=True)
+    client = serializers.HyperlinkedRelatedField(view_name='clients-detail',
+                                                 queryset=Client.objects.all())
+    rate = serializers.HyperlinkedRelatedField(view_name='rates-detail',
+                                               queryset=Rate.objects.all())
+    executor = serializers.HyperlinkedRelatedField(view_name='executors-detail',
+                                                   queryset=Executor.objects.all())
     class Meta:
         model = Order
-        fields = ['client',
+        fields = ['id',
+                  'client',
                   'executor',
                   'is_booked',
                   'is_taken',
