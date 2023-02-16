@@ -55,10 +55,11 @@ class Order(models.Model):
                                    default=False)
     is_complete = models.BooleanField('Заказ выполнен',
                                       default=False)
-    rate = models.DecimalField('Ставка в рублях',
-                               max_digits=10,
-                               decimal_places=2,
-                               blank=True)
+    rate = models.ForeignKey(Rate, 
+                             on_delete=models.PROTECT,
+                             blank=True,
+                             verbose_name='Ставка за заказ',
+                             related_name='orders')
     estimate = models.CharField('Оценка времени выполнения заказа',
                                 max_length=100,
                                 blank=True,
@@ -70,7 +71,7 @@ class Order(models.Model):
     def save(self, *args, **kwargs):
         if not self.pk:
             latest_rate = Rate.objects.latest('when_set')
-            self.rate = latest_rate.rate
+            self.rate = latest_rate
         super().save(*args, **kwargs)
 
     def __str__(self):
