@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # ----- 3rd-party apps ------
-
+    'rest_framework',
     # ------- custom apps -------
     'controller.apps.ControllerConfig',
     'client_bot.apps.ClientBotConfig',
@@ -109,6 +109,13 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissions',
+    ]
+}
 
 
 # Internationalization
