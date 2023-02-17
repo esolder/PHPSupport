@@ -23,7 +23,9 @@ class ExecutorAdmin(admin.ModelAdmin):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    readonly_fields = ('executor',
+    readonly_fields = ('client_tg_id',
+                       'executor',
+                       'executor_tg_id',
                        'rate',
                        'is_taken',
                        'is_complete',

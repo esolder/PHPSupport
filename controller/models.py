@@ -21,7 +21,7 @@ class Executor(models.Model):
     username = models.CharField('Уникальное имя пользователя telegram',
                                 max_length=32,
                                 unique=True)
-
+    
     def __str__(self):
         return self.username
     
@@ -48,12 +48,18 @@ class Order(models.Model):
                                on_delete=models.CASCADE,
                                related_name='orders',
                                verbose_name='Клиент')
+    client_tg_id = models.IntegerField('ID клиента в telegram',
+                                        blank=True,
+                                        null=True)
     executor = models.ForeignKey(Executor, 
                                  on_delete=models.SET_NULL,
                                  null=True,
                                  blank=True,
                                  related_name='orders',
                                  verbose_name='Подрядчик')
+    executor_tg_id = models.IntegerField('ID подрядчика в telegram',
+                                        blank=True,
+                                        null=True)
     is_taken = models.BooleanField('Заказ взят',
                                    default=False)
     is_complete = models.BooleanField('Заказ выполнен',
