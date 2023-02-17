@@ -46,8 +46,6 @@ INSTALLED_APPS = [
     'rest_framework',
     # ------- custom apps -------
     'controller.apps.ControllerConfig',
-    'client_bot.apps.ClientBotConfig',
-    'executor_bot.apps.ExecutorBotConfig',
 ]
 
 MIDDLEWARE = [
