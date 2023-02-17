@@ -31,7 +31,6 @@ class OrderSerializer(serializers.ModelSerializer):
         fields = ['id',
                   'client',
                   'executor',
-                  'is_booked',
                   'is_taken',
                   'is_complete',
                   'rate',

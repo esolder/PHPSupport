@@ -50,7 +50,6 @@ class Order(models.Model):
                                  blank=True,
                                  related_name='orders',
                                  verbose_name='Подрядчик')
-    is_booked = models.BooleanField('Заказ забронирован', default=False)
     is_taken = models.BooleanField('Заказ взят',
                                    default=False)
     is_complete = models.BooleanField('Заказ выполнен',
@@ -91,4 +90,4 @@ def set_complete_date(sender, instance, **kwqrgs):
 @receiver(pre_delete, sender=Executor)
 def executor_delete_handler(sender, instance, **kwargs):
     orders = instance.orders.filter(is_taken=True)
-    orders.update(is_taken=False, estimate='', is_booked=False)
+    orders.update(is_taken=False, estimate='')
