@@ -1,6 +1,6 @@
 from .models import Client, Executor, Order, Rate
 from rest_framework import viewsets, permissions, generics
-from django.views.decorators.http import require_http_methods
+from rest_framework.response import Response
 from .serializers import ClientSerializer, ExecutorSerializer, OrderSerializer, RateSerializer
 
 class OrderViewSet(viewsets.ModelViewSet):
@@ -16,11 +16,46 @@ class ClientViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
 
+class ClientView(generics.RetrieveAPIView):
+    queryset = Client.objects.all()
+    serializer_class = ClientSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        username = request.query_params.get('username')
+        if username is not None:
+            try:
+                client = self.queryset.get(username=username)
+                serializer = self.serializer_class(client)
+                return Response(serializer.data)
+            except Client.DoesNotExist:
+                pass
+        return Response({})
+
+
 class ExecutorViewSet(viewsets.ModelViewSet):
     queryset = Executor.objects.all()
     serializer_class = ExecutorSerializer
     http_method_names = ['get',]
     permission_classes = [permissions.IsAuthenticated]
+
+
+class ExecutorView(generics.RetrieveAPIView):
+    queryset = Executor.objects.all()
+    serializer_class = ExecutorSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        username = request.query_params.get('username')
+        if username is not None:
+            try:
+                executor = self.queryset.get(username=username)
+                serializer = self.serializer_class(executor)
+                return Response(serializer.data)
+            except Executor.DoesNotExist:
+                pass
+        return Response({})
+
 
 
 class RateViewSet(viewsets.ModelViewSet):
