@@ -15,9 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import RedirectView
+
 from rest_framework import routers
 from controller import views
-from django.views.generic import RedirectView
 
 router = routers.DefaultRouter()
 router.register(r'orders', views.OrderViewSet, basename='orders')
