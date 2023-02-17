@@ -66,6 +66,7 @@ class Order(models.Model):
     complete_date = models.DateField('Дата закрытия заказа',
                                      blank=True,
                                      null=True)
+    order_text = 
 
     def save(self, *args, **kwargs):
         if not self.pk:
