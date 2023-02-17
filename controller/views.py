@@ -28,3 +28,11 @@ class RateViewSet(viewsets.ModelViewSet):
     serializer_class = RateSerializer
     http_method_names = ['get',]
     permission_classes = [permissions.IsAuthenticated]
+
+
+class LastRateView(generics.RetrieveAPIView):
+    serializer_class = RateSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_object(self):
+        return Rate.objects.first()

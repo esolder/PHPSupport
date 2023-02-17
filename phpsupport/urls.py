@@ -32,9 +32,10 @@ urlpatterns = [
     path('executor/', include('executor_bot.urls'), name='executor'),
 
     path('', include(router.urls)),
+    path('', RedirectView.as_view(url='/admin/', permanent=True)),
+
+    path('actual-rate/', views.LastRateView.as_view()),
     # TODO: removed after tests
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-
-    path('', RedirectView.as_view(url='/admin/', permanent=True)),
 ]
 
