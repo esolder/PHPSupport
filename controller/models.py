@@ -4,7 +4,9 @@ from django.dispatch import receiver
 from django.utils import timezone
 
 class Client(models.Model):
-    username = models.CharField('Уникальное имя пользователя telegram', max_length=32)
+    username = models.CharField('Уникальное имя пользователя telegram',
+                                max_length=32,
+                                unique=True)
     subscription_end = models.DateField('Дата окончания подписки')
 
     def __str__(self):
@@ -16,7 +18,9 @@ class Client(models.Model):
     
 
 class Executor(models.Model):
-    username = models.CharField('Уникальное имя пользователя telegram', max_length=32)
+    username = models.CharField('Уникальное имя пользователя telegram',
+                                max_length=32,
+                                unique=True)
 
     def __str__(self):
         return self.username
