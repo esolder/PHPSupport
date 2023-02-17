@@ -8,6 +8,12 @@ class OrderViewSet(viewsets.ModelViewSet):
     serializer_class = OrderSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+    def get_queryset(self):
+        queryset = self.queryset
+        free = self.request.query_params.get('free', None)
+        if free is not None:
+            queryset = queryset.filter(executor=None)
+        return queryset
 
 class ClientViewSet(viewsets.ModelViewSet):
     queryset = Client.objects.all()
