@@ -11,7 +11,7 @@ python manage.py makemigrations
 ```
 Создайте миграции приложения:
 ```
-python manage.py makemigration controller
+python manage.py makemigrations controller
 ```
 Проведите миграции:
 ```
@@ -30,7 +30,7 @@ python manage.py createsuperuser
 ```python
 import requests
 
-url = 'http://127.0.0.1:8000/сlients/'
+url = 'http://127.0.0.1:8000/clients/'
 
 orders = requests.get(url, auth=('superuser_login', 'superuser_password'))
 print(orders.content)
