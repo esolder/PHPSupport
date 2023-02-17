@@ -19,7 +19,8 @@ class OrderAdmin(admin.ModelAdmin):
                        'is_taken',
                        'is_complete',
                        'estimate',
-                       'complete_date',)
+                       'complete_date',
+                       'text')
 
 @admin.register(Rate)
 class RateAdmin(admin.ModelAdmin):

@@ -35,4 +35,5 @@ class OrderSerializer(serializers.ModelSerializer):
                   'is_complete',
                   'rate',
                   'estimate',
-                  'complete_date']
+                  'complete_date',
+                  'text']
