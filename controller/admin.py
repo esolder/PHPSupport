@@ -1,10 +1,19 @@
 from django.contrib import admin
 
+from admin_auto_filters.filters import AutocompleteFilter
+
 from .models import Client, Executor, Order, Rate
+
+
+class ClientFilter(AutocompleteFilter):
+    title = 'Клиент'
+    field_name = 'client'
+
 
 @admin.register(Client)
 class ClientAdmin(admin.ModelAdmin):
     list_display = ('username', 'subscription_end')
+    search_fields = ['username',]
 
 
 @admin.register(Executor)
@@ -21,6 +30,8 @@ class OrderAdmin(admin.ModelAdmin):
                        'estimate',
                        'complete_date',
                        'text')
+    list_filter = [ClientFilter]
+     
 
 @admin.register(Rate)
 class RateAdmin(admin.ModelAdmin):

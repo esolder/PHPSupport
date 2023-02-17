@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # ----- 3rd-party apps ------
     'rest_framework',
+    'admin_auto_filters',
     # ------- custom apps -------
     'controller.apps.ControllerConfig',
 ]
