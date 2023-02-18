@@ -23,19 +23,25 @@ class OrderSerializer(serializers.ModelSerializer):
     client = serializers.HyperlinkedRelatedField(view_name='clients-detail',
                                                  queryset=Client.objects.all())
     rate = serializers.HyperlinkedRelatedField(view_name='rates-detail',
-                                               queryset=Rate.objects.all())
+                                               queryset=Rate.objects.all(),
+                                               required=False)
     executor = serializers.HyperlinkedRelatedField(view_name='executors-detail',
-                                                   queryset=Executor.objects.all())
+                                                   queryset=Executor.objects.all(),
+                                                   required=False)
     class Meta:
         model = Order
         fields = ['id',
                   'client',
                   'client_tg_id',
+                  'text',
                   'executor',
                   'executor_tg_id',
+                  'questions',
+                  'answers',
                   'is_taken',
+                  'credentials',
                   'is_complete',
                   'rate',
                   'estimate',
                   'complete_date',
-                  'text']
+                  ]

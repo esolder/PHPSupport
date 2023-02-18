@@ -78,6 +78,9 @@ class Order(models.Model):
                                      null=True)
     
     text = models.TextField('Текст заказа')
+    credentials = models.TextField('Данные от админки', blank=True, null=True)
+    questions = models.TextField('Вопросы от подрядчика', blank=True, null=True)
+    answers = models.TextField('Ответы от клиента', blank=True, null=True)
 
     def save(self, *args, **kwargs):
         if not self.pk:
