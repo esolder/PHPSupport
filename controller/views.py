@@ -2,8 +2,10 @@ import os
 import json
 
 from django.utils import timezone
+from django.shortcuts import get_object_or_404
 from rest_framework import status, viewsets, permissions, generics
 from rest_framework.response import Response
+from rest_framework.exceptions import ValidationError
 import requests
 from dotenv import load_dotenv
 
@@ -23,6 +25,13 @@ class OrderViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(executor=None)
         return queryset
     
+    def create(self, request, *args, **kwargs):
+        client_url = request.data['client']
+        client = get_object_or_404(Client, pk=client_url.split('/')[-2])
+        if client.subscription_end <= timezone.now().date():
+            raise ValidationError("Подписка клиента истекла")
+        return super().create(request, *args, **kwargs)
+
     def perform_create(self, serializer):
         rate = Rate.objects.first()
         serializer.save(rate=rate)
