@@ -156,7 +156,7 @@ class RateViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
 
-class LastRateView(generics.RetrieveAPIView):
+class ActualRateView(generics.RetrieveAPIView):
     serializer_class = RateSerializer
     permission_classes = [permissions.IsAuthenticated]
 

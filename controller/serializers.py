@@ -33,6 +33,7 @@ class OrderSerializer(serializers.ModelSerializer):
         fields = ['id',
                   'client',
                   'client_tg_id',
+                  'creation_date',
                   'text',
                   'executor',
                   'executor_tg_id',

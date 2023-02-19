@@ -35,7 +35,7 @@ class Rate(models.Model):
     when_set = models.DateTimeField('Когда установлена ставка', auto_now_add=True)
 
     def __str__(self):
-        return f'Ставка: {self.rate} р. Установлена: {self.when_set.date()}'
+        return f'{self.rate} р.'
     
     class Meta:
         verbose_name = 'Ставка за заказ'
@@ -51,6 +51,7 @@ class Order(models.Model):
     client_tg_id = models.IntegerField('ID клиента в telegram',
                                         blank=True,
                                         null=True)
+    creation_date = models.DateField('Дата создания заказа', auto_now_add=True)
     executor = models.ForeignKey(Executor, 
                                  on_delete=models.SET_NULL,
                                  null=True,
