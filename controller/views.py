@@ -35,12 +35,18 @@ class OrderViewSet(viewsets.ModelViewSet):
 
     def update(self, request, *args, **kwargs):
         order = self.get_object()
+        if order.executor is None and 'executor' not in request.data:
+            return Response({'detail': 'You cannot modify this order without providing an executor.'},
+                            status=status.HTTP_400_BAD_REQUEST)
         if order.is_complete:
             return Response(status=status.HTTP_403_FORBIDDEN)
         return super().update(request, *args, **kwargs)
 
     def partial_update(self, request, *args, **kwargs):
         order = self.get_object()
+        if order.executor is None and 'executor' not in request.data:
+            return Response({'detail': 'You cannot modify this order without providing an executor.'},
+                            status=status.HTTP_400_BAD_REQUEST)
         if order.is_complete:
             return Response(status=status.HTTP_403_FORBIDDEN)
         return super().partial_update(request, *args, **kwargs)
