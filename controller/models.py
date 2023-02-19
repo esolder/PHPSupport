@@ -22,6 +22,18 @@ class Executor(models.Model):
                                 max_length=32,
                                 unique=True)
     
+    def delete(self, *args, **kwargs):
+        orders = Order.objects.filter(executor=self)
+        orders.update(
+            executor=None,
+            executor_tg_id=None,
+            questions='',
+            answers='',
+            is_taken=False,
+            estimate=None,
+        )
+        super(Executor, self).delete(*args, **kwargs)
+    
     def __str__(self):
         return self.username
     
