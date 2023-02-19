@@ -85,16 +85,20 @@ class OrderViewSet(viewsets.ModelViewSet):
             return 'Ваш заказ выполнен', 'client', reply_markup
         if order.is_taken:
             self.send_credentials(order)
-            return f'Ваш заказ в процессе выполнения', 'client', None
+            return f'Ваш заказ в процессе выполнения', 'client', ''
         if order.estimate:
-            return f'Ваш заказ будет выполнен за {order.estimate}', 'client', None
+            return f'Ваш заказ будет выполнен за {order.estimate}', 'client', ''
         if order.answers:
-            return f'Ответы заказчика: {order.answers}', 'executor', None
+            return f'Ответы заказчика: {order.answers}', 'executor', ''
         if order.questions:
             reply_markup = self.get_reply_markup('Написать ответы', 'answers')
             return f'Вопросы от разработчика: {order.questions}', 'client', reply_markup
         if order.executor:
-            return 'Исполнитель найден', 'client', False
+            return 'Исполнитель найден', 'client', ''
+        if order.credentials:
+            return 'Ваши секретные данные будут переданы исполнителю', 'client', ''
+        
+        
         
     def get_reply_markup(self, text, callback_data):
         reply_markup = {
