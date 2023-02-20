@@ -5,6 +5,10 @@
 ```
 pip install -r requirements.txt
 ```
+Создайте `.env` файл и добавьте туда следующие данные:
+- `CLIENT_BOT_TOKEN` - токен бота для клиентов
+- `EXECUTOR_BOT_TOKEN` - токен бота для подрядчиков
+
 Создайте миграции проекта:
 ```
 python manage.py makemigrations
@@ -24,7 +28,7 @@ python manage.py createsuperuser
 
 ## Работа с API
 
-Заполните в админке тестовые данные
+Заполните в админке тестовые данные (обязательно добавьте хотя бы одну ставку)
 
 Пробуем получить всех клиентов:
 ```python
@@ -32,8 +36,9 @@ import requests
 
 url = 'http://127.0.0.1:8000/clients/'
 
-orders = requests.get(url, auth=('superuser_login', 'superuser_password'))
-print(orders.content)
+response = requests.get(url, auth=('superuser_login', 'superuser_password'))
+response.raise_for_status()
+print(response.content)
 ```
 
 ### Бот клиента
@@ -67,16 +72,20 @@ POST /orders/
 ```json
 {
     "id": 1,
-    "client": "http://127.0.0.1:8000/clients/1/",
-    "client_tg_id": null,
+    "client": "http://127.0.0.1:8000/clients/2/",
+    "client_tg_id": 123123,
+    "creation_date": "2023-02-20",
+    "text": "asda",
     "executor": null,
     "executor_tg_id": null,
+    "questions": null,
+    "answers": null,
     "is_taken": false,
+    "credentials": "bla",
     "is_complete": false,
     "rate": "http://127.0.0.1:8000/rates/2/",
     "estimate": null,
-    "complete_date": null,
-    "text": "gg"
+    "complete_date": null
 }
 ```
 Обратите внимание: client, rate, executor - это ссылки на объекты.
@@ -84,10 +93,16 @@ POST /orders/
 При составлении `POST` запроса для данного кейса нужно указать ссылку на клиента, id клиента в telegram и текст заказа.
 
 #### POST запрос с отправкой секретных ключей
-TODO
+```
+PATCH /orders/<id заказа>/
+```
+При составлении `PATCH` запроса для данного кейса нужно передавать credentials.
 
 #### PATCH с ответами на вопросы
-TODO
+```
+PATCH /orders/<id заказа>/
+```
+При составлении `PATCH` запроса для данного кейса нужно передавать answers.
 
 
 
@@ -145,19 +160,25 @@ Vary: Accept
     "results": [
         {
             "id": 1,
-            "client": "http://127.0.0.1:8000/clients/1/",
+            "client": "http://127.0.0.1:8000/clients/2/",
+            "client_tg_id": 123123,
+            "creation_date": "2023-02-20",
+            "text": "asda",
             "executor": null,
+            "executor_tg_id": null,
+            "questions": null,
+            "answers": null,
             "is_taken": false,
+            "credentials": "bla",
             "is_complete": false,
             "rate": "http://127.0.0.1:8000/rates/2/",
             "estimate": null,
-            "complete_date": null,
-            "text": "gg"
+            "complete_date": null
         }
     ]
 }
 ```
-
+Максимальное количество результатов на одной странице ответа - 10
 #### Бронирование заказа
 ```
 PATCH /orders/<id заказа>/
@@ -165,7 +186,10 @@ PATCH /orders/<id заказа>/
 При составлении `PATCH` запроса для данного кейса нужно указать ссылку на подрядчика, id подрядчика в telegram.
 
 #### post с уточняющими вопросами
-TODO
+```
+PATCH /orders/<id заказа>/
+```
+При составлении `PATCH` запроса для данного кейса нужно передавать questions.
 #### Отправить эстимейт
 ```
 PATCH /orders/<id заказа>/
